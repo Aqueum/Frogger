@@ -46,6 +46,26 @@ Player.prototype.constructor = Player;
 
 Player.prototype.update = function(dt) {};
 
+Player.prototype.handleInput = function(key) {
+  console.log(key);
+  switch (key) {
+    case 'up':
+      this.y -= 20;
+      break;
+    case 'down':
+      this.y += 20;
+      break;
+    case 'left':
+      this.x -= 20;
+      break;
+    case 'right':
+      this.x += 20;
+      break;
+    default:
+      null;
+  }
+};
+
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
