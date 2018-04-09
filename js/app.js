@@ -4,7 +4,6 @@ if (!localStorage.getItem('froggerScore')) {
 }
 topScore = localStorage.getItem('froggerScore');
 var defeat = false;
-var proximity = 70;
 
 var Actor = function(x, y) {
   this.x = x;
@@ -37,10 +36,8 @@ Enemy.prototype.update = function(dt) {
     this.x = -100;
   }
   if (
-    this.x > player.x - proximity &&
-    this.x < player.x + proximity &&
-    this.y > player.y - proximity &&
-    this.y < player.y + proximity
+    Math.sqrt(Math.pow(this.x - player.x, 2) + Math.pow(this.y - player.y, 2)) <
+    60
   ) {
     defeat = true;
     this.x -= this.v * dt;
