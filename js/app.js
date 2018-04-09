@@ -64,6 +64,18 @@ Player.prototype.handleInput = function(key) {
     default:
       null;
   }
+  if (this.x > 410) {
+    this.x -= 20;
+  }
+  if (this.x < 0) {
+    this.x += 20;
+  }
+  if (this.y > 400) {
+    this.y -= 20;
+  }
+  if (this.y < 0) {
+    this.y += 20;
+  }
 };
 
 // Now instantiate your objects.
