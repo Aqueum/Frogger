@@ -32,7 +32,7 @@ Enemy.prototype.constructor = Enemy;
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
-  this.x += this.v * dt;
+  this.x += this.v * dt * score;
   if (this.x > 550) {
     this.x = -100;
   }
@@ -121,9 +121,9 @@ Player.prototype.handleInput = function(key) {
 // Place the player object in a variable called player
 
 var allEnemies = [
-  (amy = new Enemy(-800, 75, 200)),
-  (arthur = new Enemy(-200, 150, 100)),
-  (ansel = new Enemy(-100, 225, 150))
+  (amy = new Enemy(-800, 75, 50)),
+  (arthur = new Enemy(-200, 150, 30)),
+  (ansel = new Enemy(-100, 225, 40))
 ];
 
 var player = new Player(300, 300);
