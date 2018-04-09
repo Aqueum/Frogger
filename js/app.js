@@ -1,3 +1,9 @@
+var score = 0;
+if (!localStorage.getItem('froggerScore')) {
+  localStorage.setItem('froggerScore', 0);
+}
+topScore = localStorage.getItem('froggerScore');
+
 var Actor = function(x, y) {
   this.x = x;
   this.y = y;
@@ -44,7 +50,17 @@ var Player = function(x, y) {
 Player.prototype = Object.create(Actor.prototype);
 Player.prototype.constructor = Player;
 
-Player.prototype.update = function(dt) {};
+Player.prototype.update = function(dt) {
+  if (this.y === 0) {
+    score += 1;
+    if (score > topScore) {
+      topScore = score;
+      localStorage.setItem('froggerScore', topScore);
+    }
+    alert('You made it!  Score = ' + score + '  (top score ' + topScore + ')');
+    this.y = 400;
+  }
+};
 
 Player.prototype.handleInput = function(key) {
   console.log(key);
