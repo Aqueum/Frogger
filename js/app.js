@@ -61,7 +61,7 @@ Enemy.prototype.update = function(dt) {
 
 var Player = function(x, y) {
   Actor.call(this, x, y);
-  this.sprite = 'images/char-boy.png';
+  this.sprite = 'images/char-cat-girl.png';
 };
 Player.prototype = Object.create(Actor.prototype);
 Player.prototype.constructor = Player;
