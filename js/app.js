@@ -3,6 +3,8 @@ if (!localStorage.getItem('froggerScore')) {
   localStorage.setItem('froggerScore', 0);
 }
 topScore = localStorage.getItem('froggerScore');
+var defeat = false;
+var proximity = 70;
 
 var Actor = function(x, y) {
   this.x = x;
@@ -34,6 +36,23 @@ Enemy.prototype.update = function(dt) {
   if (this.x > 550) {
     this.x = -100;
   }
+  if (
+    this.x > player.x - proximity &&
+    this.x < player.x + proximity &&
+    this.y > player.y - proximity &&
+    this.y < player.y + proximity
+  ) {
+    defeat = true;
+    this.x -= this.v * dt;
+    alert(
+      'You got squished!  Score = ' +
+        score +
+        '  (top score ' +
+        topScore +
+        ')  try again...'
+    );
+    score = 0;
+  }
   // You should multiply any movement by the dt parameter
   // which will ensure the game runs at the same speed for
   // all computers.
@@ -60,10 +79,13 @@ Player.prototype.update = function(dt) {
     alert('You made it!  Score = ' + score + '  (top score ' + topScore + ')');
     this.y = 400;
   }
+  if (defeat === true) {
+    this.y = 400;
+    defeat = false;
+  }
 };
 
 Player.prototype.handleInput = function(key) {
-  console.log(key);
   switch (key) {
     case 'up':
       this.y -= 20;
