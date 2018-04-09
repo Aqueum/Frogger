@@ -13,7 +13,7 @@ var Enemy = function(x, y, v) {
 
   // The image/sprite for our enemies, this uses
   // a helper we've provided to easily load images
-  Actor.call(this, x, y);
+  Actor.call(this, -100, y);
   this.v = v; // velocity
   this.sprite = 'images/enemy-bug.png';
 };
@@ -25,6 +25,9 @@ Enemy.prototype.constructor = Enemy;
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
   this.x += this.v * dt;
+  if (this.x > 550) {
+    this.x = -100;
+  }
   // You should multiply any movement by the dt parameter
   // which will ensure the game runs at the same speed for
   // all computers.
@@ -53,9 +56,9 @@ Player.prototype.update = function(dt) {
 // Place the player object in a variable called player
 
 var allEnemies = [
-  (amy = new Enemy(0, 75, 80)),
-  (arthur = new Enemy(0, 150, 40)),
-  (ansel = new Enemy(0, 225, 20))
+  (amy = new Enemy(-800, 75, 200)),
+  (arthur = new Enemy(-200, 150, 100)),
+  (ansel = new Enemy(-100, 225, 150))
 ];
 
 var player = new Player(300, 300);
