@@ -1,14 +1,21 @@
+// Global variables
+// score is the score of the current game
 var score = 0;
+// froggerScore is the top score when stored locally so it survives browser sessions
 if (!localStorage.getItem('froggerScore')) {
   localStorage.setItem('froggerScore', 0);
 }
 topScore = localStorage.getItem('froggerScore');
+// a flag that goes true when we've just lost
 var defeat = false;
 
+// a superclass that gives the shared attributes of both Enemy and Player classes
 var Actor = function(x, y) {
+  // x & y are actor screen coordinates
   this.x = x;
   this.y = y;
 };
+// by using a prototype, we don't need a separate render function for each actor, as they all rendor the same way
 Actor.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
@@ -21,7 +28,8 @@ var Enemy = function(x, y, v) {
   // The image/sprite for our enemies, this uses
   // a helper we've provided to easily load images
   Actor.call(this, -100, y);
-  this.v = v; // velocity
+  // v is basic velocity which varies per enemy
+  this.v = v;
   this.sprite = 'images/enemy-bug.png';
 };
 // Draw the enemy on the screen, required method for game
@@ -31,16 +39,21 @@ Enemy.prototype.constructor = Enemy;
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
+  // You should multiply any movement by the dt parameter
+  // which will ensure the game runs at the same speed for
+  // all computers.
+  // including score lets they game accellarate per level
   this.x += this.v * dt * score;
+  // loop the enemy to the start when it goes off-screen
   if (this.x > 550) {
     this.x = -100;
   }
+  // defeat scenario - if the enemy and player are within a certain prximity
   if (
     Math.sqrt(Math.pow(this.x - player.x, 2) + Math.pow(this.y - player.y, 2)) <
     60
   ) {
     defeat = true;
-    this.x -= this.v * dt;
     alert(
       'You got squished!  Score = ' +
         score +
@@ -50,9 +63,6 @@ Enemy.prototype.update = function(dt) {
     );
     score = 0;
   }
-  // You should multiply any movement by the dt parameter
-  // which will ensure the game runs at the same speed for
-  // all computers.
 };
 
 // Now write your own player class
@@ -67,6 +77,8 @@ Player.prototype = Object.create(Actor.prototype);
 Player.prototype.constructor = Player;
 
 Player.prototype.update = function(dt) {
+  // this doesn't actually use dt - fail
+  // win scenario
   if (this.y === 0) {
     score += 1;
     if (score > topScore) {
@@ -74,6 +86,7 @@ Player.prototype.update = function(dt) {
       localStorage.setItem('froggerScore', topScore);
     }
     alert('You made it!  Score = ' + score + '  (top score ' + topScore + ')');
+    // send player back to the bottom
     this.y = 400;
   }
   if (defeat === true) {
@@ -83,6 +96,7 @@ Player.prototype.update = function(dt) {
 };
 
 Player.prototype.handleInput = function(key) {
+  // move the player
   switch (key) {
     case 'up':
       this.y -= 20;
@@ -99,6 +113,7 @@ Player.prototype.handleInput = function(key) {
     default:
       null;
   }
+  // bound the player to the screen
   if (this.x > 410) {
     this.x -= 20;
   }
