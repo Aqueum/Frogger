@@ -30,7 +30,7 @@ var Enemy = function(x, y, v) {
   Actor.call(this, -100, y);
   // v is basic velocity which varies per enemy
   this.v = v;
-  this.sprite = 'images/enemy-bug.png';
+  this.sprite = 'images/char-horn-girl.png';
 };
 // Draw the enemy on the screen, required method for game
 Enemy.prototype = Object.create(Actor.prototype);
@@ -71,7 +71,7 @@ Enemy.prototype.update = function(dt) {
 
 var Player = function(x, y) {
   Actor.call(this, x, y);
-  this.sprite = 'images/char-cat-girl.png';
+  this.sprite = 'images/char-princess-girl.png';
 };
 Player.prototype = Object.create(Actor.prototype);
 Player.prototype.constructor = Player;
